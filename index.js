@@ -27,10 +27,10 @@ function getFormatter(key, predefined) {
     var self = this
     return key.replace(KEY_PATTERN, function(m, format, p1) {
       ks = p1.split('.')
-      v = null
       k = ks.shift()
-      if (args.hasOwnProperty(k)) {
-        v = args[k] // get from arguments
+      v = args[k]
+      if (v !== undefined) {
+        // get from arguments
       } else if (predefined.hasOwnProperty(k)) {
         v = predefined[k] // get from pre-defined
       } else if (k === 'this') {
@@ -50,7 +50,8 @@ function getFormatter(key, predefined) {
       if (String(v).indexOf('[object ') === 0) {
         v = null
       }
-      return v || m
+      // `null` and `undefined` is not allowed
+      return v == null ? m : v
     })
   }
 }
