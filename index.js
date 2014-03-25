@@ -18,21 +18,24 @@
 
 var KEY_PATTERN = /(%j)?{([\w\.]+)}/g
 
-function getFormatter(key, predefined) {
+function getFormatter(key, obj) {
 
-  predefined = predefined || {}
+  obj = obj || {}
 
   return function keyf(args) {
-    var ks, v, k
+    var ks, v, k, predefined
     var self = this
+    if (args == null) {
+      args = arguments
+    }
     return key.replace(KEY_PATTERN, function(m, format, p1) {
       ks = p1.split('.')
       k = ks.shift()
       v = args[k]
       if (v !== undefined) {
         // get from arguments
-      } else if (predefined.hasOwnProperty(k)) {
-        v = predefined[k] // get from pre-defined
+      } else if (predefined = obj[k]) {
+        v = predefined // get from pre-defined
       } else if (k === 'this') {
         v = self
       } else {
