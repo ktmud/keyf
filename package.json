@@ -1,6 +1,6 @@
 {
   "name": "keyf",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "key formatter based on a function's arguments",
   "main": "index.js",
   "scripts": {
